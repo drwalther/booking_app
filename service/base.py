@@ -14,15 +14,15 @@ class BaseService:
             return result.scalar_one_or_none()
 
     @classmethod
-    async def get_one(cls, **kwargs):
+    async def get_one(cls, **params):
         async with session_maker() as session:
-            query = select(cls.model).filter_by(**kwargs)
+            query = select(cls.model).filter_by(**params)
             result = await session.execute(query)
             return result.scalar_one_or_none()
 
     @classmethod
-    async def get_all(cls, **kwargs):
+    async def get_all(cls, **params):
         async with session_maker() as session:
-            query = select(cls.model).filter_by(**kwargs)
+            query = select(cls.model).filter_by(**params)
             result = await session.execute(query)
             return result.scalars().all()
