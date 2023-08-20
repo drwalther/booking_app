@@ -4,6 +4,6 @@ from pydantic import (
 )
 
 
-class SchemaUserRegister(BaseModel):
+class SchemaUserAuth(BaseModel):
     email: EmailStr
     password: str
