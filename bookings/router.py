@@ -3,7 +3,7 @@ from fastapi import APIRouter
 from bookings.schemas import SchemaBooking
 from bookings.service import BookingsService
 
-router = APIRouter(prefix="/bookings", tags=["bookings"])
+router = APIRouter(prefix="/bookings", tags=["Bookings"])
 
 
 @router.get("")
