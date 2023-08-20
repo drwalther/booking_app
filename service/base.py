@@ -1,4 +1,7 @@
-from sqlalchemy import select
+from sqlalchemy import (
+    insert,
+    select,
+)
 
 from database import session_maker
 
@@ -14,15 +17,22 @@ class BaseService:
             return result.scalar_one_or_none()
 
     @classmethod
-    async def get_one(cls, **params):
+    async def get_one(cls, **filters):
         async with session_maker() as session:
-            query = select(cls.model).filter_by(**params)
+            query = select(cls.model).filter_by(**filters)
             result = await session.execute(query)
             return result.scalar_one_or_none()
 
     @classmethod
-    async def get_all(cls, **params):
+    async def get_all(cls, **filters):
         async with session_maker() as session:
-            query = select(cls.model).filter_by(**params)
+            query = select(cls.model).filter_by(**filters)
             result = await session.execute(query)
             return result.scalars().all()
+
+    @classmethod
+    async def add(cls, **data):
+        async with session_maker() as session:
+            query = insert(cls.model).values(**data)
+            await session.execute(query)
+            await session.commit()
