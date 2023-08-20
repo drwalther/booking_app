@@ -1,7 +1,16 @@
-from fastapi import HTTPException
+from datetime import (
+    datetime,
+    timedelta,
+)
+
+from jose import jwt
 from passlib.context import CryptContext
 from pydantic import EmailStr
 
+from config import (
+    ALGORITHM,
+    SECRET_KEY,
+)
 from users.service import UsersService
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -18,7 +27,13 @@ def get_password_hash(password):
 async def authenticate_user(email: EmailStr, password: str):
     user = await UsersService.get_one(email=email)
     if not user and not verify_password(password, user.password):
-        raise HTTPException(
-            status_code=409, detail="User is not exists or password is incorrect"
-        )
+        return None
     return user
+
+
+def create_access_token(data: dict):
+    to_encode = data.copy()
+    expire = datetime.utcnow() + timedelta(minutes=15)
+    to_encode.update({"exp": expire})
+    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    return encoded_jwt
