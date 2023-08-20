@@ -15,7 +15,7 @@ def get_password_hash(password):
     return pwd_context.hash(password)
 
 
-async def login_user(email: EmailStr, password: str):
+async def authenticate_user(email: EmailStr, password: str):
     user = await UsersService.get_one(email=email)
     if not user and not verify_password(password, user.password):
         raise HTTPException(
