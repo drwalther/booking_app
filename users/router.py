@@ -30,7 +30,9 @@ async def register_user(user_data: SchemaUserAuth):
 async def login_user(response: Response, user_data: SchemaUserAuth):
     user = await authenticate_user(email=user_data.email, password=user_data.password)
     if not user:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="User doesn't exists"
+        )
     access_token = create_access_token({"subject": str(user.id)})
     response.set_cookie("booking_access_token", access_token, httponly=True)
     return access_token
