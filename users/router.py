@@ -1,5 +1,6 @@
 from fastapi import (
     APIRouter,
+    Depends,
     HTTPException,
     Response,
     status,
@@ -10,6 +11,8 @@ from users.auth import (
     create_access_token,
     get_password_hash,
 )
+from users.helpers import get_current_user
+from users.models import Users
 from users.schemas import SchemaUserAuth
 from users.service import UsersService
 
@@ -41,3 +44,8 @@ async def login_user(response: Response, user_data: SchemaUserAuth):
 @router.post("/logout")
 async def logout_user(response: Response):
     response.delete_cookie("booking_access_token")
+
+
+@router.get("/me")
+async def get_me(current_user: Users = Depends(get_current_user)):
+    return current_user
