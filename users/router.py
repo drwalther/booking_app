@@ -35,4 +35,4 @@ async def login_user(response: Response, user_data: SchemaUserAuth):
         )
     access_token = create_access_token({"sub": str(user.id)})
     response.set_cookie("booking_access_token", access_token, httponly=True)
-    return access_token
+    return {"access_token": access_token}
