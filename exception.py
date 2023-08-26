@@ -45,3 +45,8 @@ class InvalidTokenException(CustomException):
 class UserNotFoundException(CustomException):
     status_code = status.HTTP_401_UNAUTHORIZED
     detail = "Internal error"
+
+
+class RoomIsNotAvailable(CustomException):
+    status_code = status.HTTP_409_CONFLICT
+    detail = "No available rooms"
