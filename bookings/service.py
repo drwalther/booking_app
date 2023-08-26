@@ -49,7 +49,7 @@ class BookingsService(BaseService):
                     )
                 )
                 .select_from(Rooms)
-                .join(booked_rooms, booked_rooms.c.room_id == Rooms.id)
+                .join(booked_rooms, booked_rooms.c.room_id == Rooms.id, isouter=True)
                 .where(Rooms.id == 1)
                 .group_by(Rooms.rooms_quantity, booked_rooms.c.room_id)
             )
@@ -64,6 +64,7 @@ class BookingsService(BaseService):
                 add_booking = (
                     insert(Bookings)
                     .values(
+                        room_id=room_id,
                         user_id=user_id,
                         check_in_date=check_in_date,
                         check_out_date=check_out_date,
