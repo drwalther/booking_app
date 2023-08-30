@@ -2,7 +2,6 @@ from datetime import date
 
 from sqlalchemy import (
     and_,
-    delete,
     func,
     insert,
     or_,
@@ -10,10 +9,7 @@ from sqlalchemy import (
 )
 
 from bookings.models import Bookings
-from database import (
-    engine,
-    session_maker,
-)
+from database import session_maker
 from rooms.models import Rooms
 from service.base import BaseService
 
@@ -82,11 +78,3 @@ class BookingsService(BaseService):
                 return new_booking.scalar()
             else:
                 return None
-
-    @classmethod
-    async def delete(cls, user_id: int, booking_id: int):
-        async with session_maker() as session:
-            query = delete(Bookings).filter_by(id=booking_id, user_id=user_id)
-            print(query.compile(engine, compile_kwargs={"literal_binds": True}))
-            await session.execute(query)
-            await session.commit()
