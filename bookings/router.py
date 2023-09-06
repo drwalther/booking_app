@@ -4,6 +4,7 @@ from fastapi import (
     APIRouter,
     Depends,
 )
+from starlette import status
 
 from bookings.schemas import SchemaBooking
 from bookings.service import BookingsService
@@ -31,6 +32,6 @@ async def add_booking(
         raise RoomIsNotAvailable
 
 
-@router.delete("/{booking_id}", status_code=204)
+@router.delete("/{booking_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_booking(booking_id: int, user: Users = Depends(get_current_user)):
     return await BookingsService.delete(user.id, booking_id)
