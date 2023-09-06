@@ -21,7 +21,7 @@ async def get_hotel_by_id(hotel_id: int) -> SchemaHotels:
 async def get_hotel_by_location(
     location: str, check_in_date: date, check_out_date: date
 ) -> list[SchemaHotels]:
-    if check_in_date > check_in_date:
+    if check_in_date > check_out_date:
         raise CheckOutEarlierThanCheckIn
     if (check_out_date - check_in_date).days > 28:
         raise TooLongBookingPeriod
