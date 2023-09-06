@@ -30,7 +30,7 @@ class BookingsService(BaseService):
                 select(Bookings)
                 .where(
                     and_(
-                        Bookings.room_id == 1,
+                        Bookings.room_id == room_id,
                         or_(
                             and_(
                                 Bookings.check_in_date >= check_out_date,
