@@ -50,3 +50,13 @@ class UserNotFoundException(CustomException):
 class RoomIsNotAvailable(CustomException):
     status_code = status.HTTP_409_CONFLICT
     detail = "No available rooms"
+
+
+class CheckOutEarlierThanCheckIn(CustomException):
+    status_code = status.HTTP_400_BAD_REQUEST
+    detail = "Check in date can't be after check out date"
+
+
+class TooLongBookingPeriod(CustomException):
+    status_code = status.HTTP_400_BAD_REQUEST
+    detail = "You can't book a hotel for such a long period"
