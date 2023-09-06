@@ -25,11 +25,11 @@ class HotelsService(BaseService):
             .where(
                 or_(
                     and_(
-                        Bookings.check_out_date >= check_out_date,
-                        Bookings.check_out_date <= check_out_date,
+                        Bookings.check_in_date >= check_in_date,
+                        Bookings.check_in_date <= check_out_date,
                     ),
                     and_(
-                        Bookings.check_out_date <= check_out_date,
+                        Bookings.check_in_date <= check_in_date,
                         Bookings.check_out_date > check_in_date,
                     ),
                 ),
