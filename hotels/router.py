@@ -1,4 +1,5 @@
 from datetime import date
+from typing import Optional
 
 from fastapi import APIRouter
 
@@ -13,7 +14,7 @@ router = APIRouter(prefix="/hotels", tags=["Hotels"])
 
 
 @router.get("/id/{hotel_id}")
-async def get_hotel_by_id(hotel_id: int) -> SchemaHotels:
+async def get_hotel_by_id(hotel_id: int) -> Optional[SchemaHotels]:
     return await HotelsService.get_by_id(hotel_id)
 
 
