@@ -2,12 +2,12 @@ from datetime import date
 
 from fastapi import APIRouter
 
-from exception import (
+from app.exception import (
     CheckOutEarlierThanCheckIn,
     TooLongBookingPeriod,
 )
-from hotels.schemas import SchemaHotels
-from hotels.service import HotelsService
+from app.hotels.schemas import SchemaHotels
+from app.hotels.service import HotelsService
 
 router = APIRouter(prefix="/hotels", tags=["Hotels"])
 

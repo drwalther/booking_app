@@ -4,7 +4,7 @@ from sqlalchemy import (
     String,
 )
 
-from database import Base
+from app.database import Base
 
 
 class Users(Base):

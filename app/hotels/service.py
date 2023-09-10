@@ -7,11 +7,11 @@ from sqlalchemy import (
     select,
 )
 
-from bookings.models import Bookings
-from database import session_maker
-from hotels.models import Hotels
-from rooms.models import Rooms
-from service.base import BaseService
+from app.bookings.models import Bookings
+from app.database import session_maker
+from app.hotels.models import Hotels
+from app.rooms.models import Rooms
+from app.service.base import BaseService
 
 
 class HotelsService(BaseService):

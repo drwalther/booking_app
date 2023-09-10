@@ -9,18 +9,18 @@ from jose import (
     jwt,
 )
 
-from config import (
+from app.config import (
     ALGORITHM,
     SECRET_KEY,
 )
-from exception import (
+from app.exception import (
     InvalidTokenException,
     TokenExpiredException,
     TokenIncorrectException,
     TokenNotFoundException,
     UserNotFoundException,
 )
-from users.service import UsersService
+from app.users.service import UsersService
 
 
 def get_token(request: Request):

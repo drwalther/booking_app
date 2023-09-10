@@ -7,7 +7,7 @@ from sqlalchemy.orm import (
     sessionmaker,
 )
 
-from config import DB_URI
+from app.config import DB_URI
 
 engine = create_async_engine(DB_URI)
 

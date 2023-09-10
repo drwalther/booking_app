@@ -9,13 +9,13 @@ from sqlalchemy import (
     select,
 )
 
-from bookings.models import Bookings
-from database import (
+from app.bookings.models import Bookings
+from app.database import (
     engine,
     session_maker,
 )
-from rooms.models import Rooms
-from service.base import BaseService
+from app.rooms.models import Rooms
+from app.service.base import BaseService
 
 
 class BookingsService(BaseService):

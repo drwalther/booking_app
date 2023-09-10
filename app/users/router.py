@@ -4,19 +4,19 @@ from fastapi import (
     Response,
 )
 
-from exception import (
+from app.exception import (
     UserAlreadyExistsException,
     UserDoesNotExistException,
 )
-from users.auth import (
+from app.users.auth import (
     authenticate_user,
     create_access_token,
     get_password_hash,
 )
-from users.helpers import get_current_user
-from users.models import Users
-from users.schemas import SchemaUserAuth
-from users.service import UsersService
+from app.users.helpers import get_current_user
+from app.users.models import Users
+from app.users.schemas import SchemaUserAuth
+from app.users.service import UsersService
 
 router = APIRouter(prefix="/auth", tags=["Auth and users"])
 

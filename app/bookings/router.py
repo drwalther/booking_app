@@ -6,11 +6,11 @@ from fastapi import (
 )
 from starlette import status
 
-from bookings.schemas import SchemaBooking
-from bookings.service import BookingsService
-from exception import RoomIsNotAvailable
-from users.helpers import get_current_user
-from users.models import Users
+from app.bookings.schemas import SchemaBooking
+from app.bookings.service import BookingsService
+from app.exception import RoomIsNotAvailable
+from app.users.helpers import get_current_user
+from app.users.models import Users
 
 router = APIRouter(prefix="/bookings", tags=["Bookings"])
 

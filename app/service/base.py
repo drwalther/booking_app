@@ -3,7 +3,7 @@ from sqlalchemy import (
     select,
 )
 
-from database import session_maker
+from app.database import session_maker
 
 
 class BaseService:
