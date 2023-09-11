@@ -17,7 +17,7 @@ class RoomsService(BaseService):
     model = Rooms
 
     @classmethod
-    async def find_all(cls, hotel_id: int, date_from: date, date_to: date):
+    async def get_all(cls, hotel_id: int, date_from: date, date_to: date):
         booked_rooms = (
             select(Bookings.room_id, func.count(Bookings.room_id).label("rooms_booked"))
             .select_from(Bookings)
