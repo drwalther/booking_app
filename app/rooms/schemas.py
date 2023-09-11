@@ -6,11 +6,11 @@ from pydantic import BaseModel
 class SchemaRoom(BaseModel):
     id: int
     hotel_id: int
-    name: str
+    room_name: str
     description: str | None
     services: List[str]
     price: int
-    quantity: int
+    rooms_quantity: int
     image_id: int
 
     class Config:
