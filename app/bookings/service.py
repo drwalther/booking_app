@@ -10,10 +10,7 @@ from sqlalchemy import (
 )
 
 from app.bookings.models import Bookings
-from app.database import (
-    engine,
-    session_maker,
-)
+from app.database import session_maker
 from app.rooms.models import Rooms
 from app.service.base import BaseService
 
@@ -87,6 +84,5 @@ class BookingsService(BaseService):
     async def delete(cls, user_id: int, booking_id: int):
         async with session_maker() as session:
             query = delete(Bookings).filter_by(id=booking_id, user_id=user_id)
-            print(query.compile(engine, compile_kwargs={"literal_binds": True}))
             await session.execute(query)
             await session.commit()
