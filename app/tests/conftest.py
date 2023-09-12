@@ -35,7 +35,7 @@ async def prepare_db():
 
         hotels = open_mock("hotels")
         rooms = open_mock("rooms")
-        users = open_mock("rooms")
+        users = open_mock("users")
         bookings = open_mock("bookings")
 
         for booking in bookings:
