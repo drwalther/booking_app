@@ -40,10 +40,10 @@ async def prepare_db():
 
         for booking in bookings:
             booking["check_in_date"] = datetime.strptime(
-                booking["check_in_date"], "%y-%m-%d"
+                booking["check_in_date"], "%Y-%m-%d"
             )
             booking["check_out_date"] = datetime.strptime(
-                booking["check_out_date"], "%y-%m-%d"
+                booking["check_out_date"], "%Y-%m-%d"
             )
 
         async with session_maker() as session:
