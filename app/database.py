@@ -16,7 +16,7 @@ from app.config import (
 
 if MODE == "TEST":
     DATABASE_URI = TEST_DB_URI
-    BD_PARAMS = {"poolclass": NullPool}
+    DB_PARAMS = {"poolclass": NullPool}
 else:
     DATABASE_URI = DB_URI
     DB_PARAMS = {}
