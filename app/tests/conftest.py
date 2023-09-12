@@ -1,5 +1,6 @@
 import asyncio
 import json
+from datetime import datetime
 
 import pytest
 from sqlalchemy import insert
@@ -34,6 +35,10 @@ async def prepare_db():
         users = open_mock("rooms")
         bookings = open_mock("bookings")
 
+        for booking in bookings:
+            booking["check_in_date"] = datetime.strptime("%y-%m-%d")
+            booking["check_out_date"] = datetime.strptime("%y-%m-%d")
+
         async with session_maker() as session:
             add_hotels = insert(Hotels).values(hotels)
             add_rooms = insert(Rooms).values(rooms)
@@ -50,8 +55,7 @@ async def prepare_db():
     def event_loop(request):
         """Code from pytest-asyncio documentation.
 
-        Creates an instance of the default event loop for each test
-        case.
+        Creates an instance of the default event loop for each test case.
         """
         loop = asyncio.get_event_loop_policy().new_event_loop()
         yield loop
