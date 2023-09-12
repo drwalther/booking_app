@@ -47,15 +47,15 @@ async def prepare_db():
             )
 
         async with session_maker() as session:
-            add_hotels = insert(Hotels).values(hotels)
-            add_rooms = insert(Rooms).values(rooms)
-            add_users = insert(Users).values(users)
-            add_bookings = insert(Bookings).values(bookings)
+            for Model, values in [
+                (Hotels, hotels),
+                (Rooms, rooms),
+                (Users, users),
+                (Bookings, bookings),
+            ]:
+                query = insert(Model).values(values)
+                await session.execute(query)
 
-            await session.execute(add_hotels)
-            await session.execute(add_rooms)
-            await session.execute(add_users)
-            await session.execute(add_bookings)
             await session.commit()
 
 
