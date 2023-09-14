@@ -1,6 +1,7 @@
 from sqladmin import ModelView
 
 from app.bookings.models import Bookings
+from app.rooms.models import Rooms
 from app.users.models import Users
 
 
@@ -36,3 +37,22 @@ class BookingsAdmin(ModelView, model=Bookings):
         Bookings.room_id: "ID номера",
     }
     icon = "fa-solid fa-book"
+
+
+class RoomsAdmin(ModelView, model=Rooms):
+    column_list = "__all__"
+    name = "Номер"
+    name_plural = "Номера"
+    column_searchable_list = [Rooms.hotel, Rooms.services]
+    page_size = 50
+    page_size_options = [50, 100, 200]
+    column_labels = {
+        Rooms.room_name: "Номер",
+        Rooms.hotel: "Отель",
+        Rooms.services: "Услуги",
+        Rooms.rooms_quantity: "Количество номеров",
+        Rooms.description: "Описание",
+        Rooms.hotel_id: "ID отеля",
+        Rooms.price: "Цена",
+    }
+    icon = "fa-solid fa-bed"
