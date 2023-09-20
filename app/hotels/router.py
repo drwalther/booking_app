@@ -12,7 +12,7 @@ from app.hotels.service import HotelsService
 router = APIRouter(prefix="/hotels", tags=["Hotels"])
 
 
-@router.get("/{hotel_id}")
+@router.get("/id/{hotel_id}")
 async def get_hotel_by_id(hotel_id: int) -> SchemaHotels | None:
     return await HotelsService.get_by_id(hotel_id)
 
