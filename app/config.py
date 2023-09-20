@@ -16,3 +16,9 @@ ALGORITHM = os.getenv("ALGORITHM")
 
 # Redis as a broker for Celery
 BROKER_URI = os.getenv("BROKER_URI")
+
+# SMTP config
+SMTP_URI = os.getenv("SMTP_URI")
+SMTP_PORT = os.getenv("SMTP_PORT")
+EMAIL_USER = os.getenv("EMAIL_USER")
+EMAIL_PASS = os.getenv("EMAIL_USER")
