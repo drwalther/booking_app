@@ -55,6 +55,7 @@ class RoomsAdmin(ModelView, model=Rooms):
         Rooms.description: "Описание",
         Rooms.hotel_id: "ID отеля",
         Rooms.price: "Цена",
+        Rooms.booking: "Бронирования",
     }
     icon = "fa-solid fa-bed"
 
