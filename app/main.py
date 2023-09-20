@@ -1,7 +1,11 @@
 from fastapi import FastAPI
+from fastapi_cache import FastAPICache
+from fastapi_cache.backends.redis import RedisBackend
+from redis import asyncio as aioredis
 from sqladmin import Admin
 from starlette.middleware.cors import CORSMiddleware
 
+from app.admin.auth import authentication_backend
 from app.admin.views import (
     BookingsAdmin,
     HotelsAdmin,
@@ -40,8 +44,17 @@ app.add_middleware(
 )
 
 # Admin panel for DB
-admin = Admin(app, engine)
+admin = Admin(app, engine, authentication_backend=authentication_backend)
 admin.add_view(UsersAdmin)
 admin.add_view(BookingsAdmin)
 admin.add_view(RoomsAdmin)
 admin.add_view(HotelsAdmin)
+
+
+# redis init
+@app.on_event("startup")
+def startup():
+    redis = aioredis.from_url(
+        "redis://localhost", encoding="utf8", decode_responses=True
+    )
+    FastAPICache.init(RedisBackend(redis), prefix="fastapi-cache")
