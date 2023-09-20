@@ -26,7 +26,7 @@ def get_password_hash(password):
 
 async def authenticate_user(email: EmailStr, password: str):
     user = await UsersService.get_one(email=email)
-    if not user and not verify_password(password, user.password):
+    if not (user and verify_password(password, user.hashed_password)):
         return None
     return user
 
