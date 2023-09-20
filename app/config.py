@@ -13,3 +13,6 @@ MODE = os.getenv("MODE")
 # JWT token
 SECRET_KEY = os.getenv("SECRET_KEY")
 ALGORITHM = os.getenv("ALGORITHM")
+
+# Redis as a broker for Celery
+BROKER_URI = os.getenv("BROKER_URI")
