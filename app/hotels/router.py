@@ -1,6 +1,8 @@
 from datetime import date
 
 from fastapi import APIRouter
+from fastapi_cache import JsonCoder
+from fastapi_cache.decorator import cache
 
 from app.exception import (
     CheckOutEarlierThanCheckIn,
@@ -18,6 +20,7 @@ async def get_hotel_by_id(hotel_id: int) -> SchemaHotels | None:
 
 
 @router.get("/{location}")
+@cache(expire=60, coder=JsonCoder)
 async def get_hotel_by_location(
     location: str, check_in_date: date, check_out_date: date
 ) -> list[SchemaHotels]:
