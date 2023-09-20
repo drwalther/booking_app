@@ -20,7 +20,7 @@ async def get_bookings(user: Users = Depends(get_current_user)) -> list[SchemaBo
     return await BookingsService.get_all(user_id=user.id)
 
 
-@router.post("")
+@router.post("", status_code=status.HTTP_201_CREATED)
 async def add_booking(
     room_id: int,
     check_in_date: date,
