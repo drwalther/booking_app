@@ -1,24 +1,49 @@
-import os
+from typing import Literal
 
-from dotenv import load_dotenv
+from pydantic_settings import BaseSettings
 
-load_dotenv()
 
-DB_URI = os.getenv("DB_URI")
-TEST_DB_URI = os.getenv("TEST_DB_URI")
+class Settings(BaseSettings):
+    MODE: Literal["DEV", "TEST"]
 
-# Development, testing or production mode
-MODE = os.getenv("MODE")
+    # database attributes
+    DB_HOST: str
+    DB_PORT: int
+    DB_USER: str
+    DB_PASS: str
+    DB_NAME: str
 
-# JWT token
-SECRET_KEY = os.getenv("SECRET_KEY")
-ALGORITHM = os.getenv("ALGORITHM")
+    @property
+    def DB_URI(self):
+        """Returns database URI."""
+        return f"postgresql+asyncpg://{self.DB_USER}:{self.DB_PASS}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
 
-# Redis as a broker for Celery
-BROKER_URI = os.getenv("BROKER_URI")
+    # testing database attributes
+    TEST_DB_HOST: str
+    TEST_DB_PORT: int
+    TEST_DB_USER: str
+    TEST_DB_PASS: str
+    TEST_DB_NAME: str
 
-# SMTP config
-SMTP_URI = os.getenv("SMTP_URI")
-SMTP_PORT = os.getenv("SMTP_PORT")
-EMAIL_USER = os.getenv("EMAIL_USER")
-EMAIL_PASS = os.getenv("EMAIL_USER")
+    @property
+    def TEST_DB_URI(self):
+        """Returns testing database URI."""
+        return f"postgresql+asyncpg://{self.TEST_DB_USER}:{self.TEST_DB_PASS}@{self.TEST_DB_HOST}:{self.TEST_DB_PORT}/{self.TEST_DB_NAME}"
+
+    # Attributes for SMTP
+    SMTP_URI: str
+    SMTP_PORT: int
+    EMAIL_USER: str
+    EMAIL_PASS: str
+
+    REDIS_URI: str
+
+    # Attributes for JWT-token
+    SECRET_KEY: str
+    ALGORITHM: str
+
+    class Config:
+        env_file = ".env"
+
+
+settings = Settings()

@@ -7,7 +7,7 @@ from httpx import AsyncClient
 from sqlalchemy import insert
 
 from app.bookings.models import Bookings
-from app.config import MODE
+from app.config import settings
 from app.database import (
     Base,
     engine,
@@ -22,11 +22,12 @@ from app.users.models import Users
 @pytest.fixture(scope="session", autouse=True)
 async def prepare_db():
     """Creates testing environment."""
-    assert MODE == "TEST"
+    assert settings.MODE == "TEST"
 
-    async with engine.begin() as connection:
-        await connection.run_sync(Base.metadata.drop_all)
-        await connection.run_sync(Base.metadata.create_all)
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
+        yield
+        await conn.run_sync(Base.metadata.drop_all)
 
         def open_mock(model: str):
             """Reads mock data."""
@@ -61,10 +62,7 @@ async def prepare_db():
 
 @pytest.fixture(scope="session")
 def event_loop(request):
-    """Code from pytest-asyncio documentation.
-
-    Creates an instance of the default event loop for each test case.
-    """
+    """Creates an instance of the default event loop for each test case."""
     loop = asyncio.get_event_loop_policy().new_event_loop()
     yield loop
     loop.close()

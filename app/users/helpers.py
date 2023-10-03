@@ -9,10 +9,7 @@ from jose import (
     jwt,
 )
 
-from app.config import (
-    ALGORITHM,
-    SECRET_KEY,
-)
+from app.config import settings
 from app.exception import (
     InvalidTokenException,
     TokenExpiredException,
@@ -32,7 +29,7 @@ def get_token(request: Request):
 
 async def get_current_user(token: str = Depends(get_token)):
     try:
-        payload = jwt.decode(token, SECRET_KEY, ALGORITHM)
+        payload = jwt.decode(token, settings.SECRET_KEY, settings.ALGORITHM)
     except JWTError:
         raise TokenIncorrectException()
     expire: str = payload.get("exp")

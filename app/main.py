@@ -13,7 +13,7 @@ from app.admin.views import (
     UsersAdmin,
 )
 from app.bookings.router import router as router_bookings
-from app.config import BROKER_URI
+from app.config import settings
 from app.database import engine
 from app.hotels.router import router as router_hotels
 from app.rooms.router import router as router_rooms
@@ -55,5 +55,7 @@ admin.add_view(HotelsAdmin)
 # redis init
 @app.on_event("startup")
 def startup():
-    redis = aioredis.from_url(BROKER_URI, encoding="utf8", decode_responses=True)
+    redis = aioredis.from_url(
+        settings.REDIS_URI, encoding="utf8", decode_responses=True
+    )
     FastAPICache.init(RedisBackend(redis), prefix="fastapi-cache")
