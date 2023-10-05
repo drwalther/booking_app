@@ -18,7 +18,7 @@
 * SQLAlchemy/PostgreSQL
 * Аутентификация с помощью JWT-токена
 * Админ-панель на основе SQLAlchemy Admin
-* Celery
+* Очереди задач с помощью Celery
 * Кеширование с помощью Redis
 * Асинхронные запросы в БД
 * CI (pre-commit, GitHub Actions)
