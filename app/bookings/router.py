@@ -4,11 +4,13 @@ from fastapi import (
     APIRouter,
     Depends,
 )
+from pydantic import TypeAdapter
 from starlette import status
 
 from app.bookings.schemas import SchemaBooking
 from app.bookings.service import BookingsService
 from app.exception import RoomIsNotAvailable
+from app.tasks.tasks import send_booking_confirmation_email
 from app.users.helpers import get_current_user
 from app.users.models import Users
 
@@ -30,6 +32,11 @@ async def add_booking(
     booking = await BookingsService.add(user.id, room_id, check_in_date, check_out_date)
     if not booking:
         raise RoomIsNotAvailable
+    # converts booking to dict for Celery
+    booking_to_dict = TypeAdapter(SchemaBooking).validate_python(booking).model_dump()
+
+    send_booking_confirmation_email.delay(booking_to_dict, user.email)
+    return booking_to_dict
 
 
 @router.delete("/{booking_id}", status_code=status.HTTP_204_NO_CONTENT)
