@@ -6,6 +6,7 @@ from app.config import settings
 
 
 def create_booking_confirmation(booking: dict, email_to: EmailStr):
+    """Creates email message for confirmation."""
     email = EmailMessage()
 
     email["Subject"] = "Подтверждение бронирования"
