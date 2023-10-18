@@ -8,6 +8,7 @@ from app.exception import (
     UserAlreadyExistsException,
     UserDoesNotExistException,
 )
+from app.tasks.tasks import send_registration_confirmation_email
 from app.users.auth import (
     authenticate_user,
     create_access_token,
@@ -28,6 +29,7 @@ async def register_user(user_data: SchemaUserAuth):
         raise UserAlreadyExistsException()
     hashed_password = get_password_hash(user_data.password)
     await UsersService.add(email=user_data.email, hashed_password=hashed_password)
+    send_registration_confirmation_email.delay(user_data.email)
 
 
 @router.post("/login")
