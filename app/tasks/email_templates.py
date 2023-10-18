@@ -21,3 +21,20 @@ def create_booking_confirmation(booking: dict, email_to: EmailStr):
         subtype="html",
     )
     return email
+
+
+def create_registration_confirmation(email_to: EmailStr):
+    email = EmailMessage()
+
+    email["Subject"] = "Подтверждение регистрации"
+    email["From"] = settings.EMAIL_USER
+    email["To"] = email_to
+
+    email.set_content(
+        """
+            <h1>Регистрация прошла успешно</h1>
+            Теперь вы можете пользоваться сервисом.
+        """,
+        subtype="html",
+    )
+    return email
