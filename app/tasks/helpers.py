@@ -13,7 +13,7 @@ def send_message(message: EmailMessage):
         server.send_message(message)
 
 
-def create_message(email_to: EmailStr, subject: str, content: str):
+def create_message(email_to: EmailStr, subject: str, content: str) -> EmailMessage:
     email = EmailMessage()
     email["Subject"] = subject
     email["From"] = settings.EMAIL_USER
