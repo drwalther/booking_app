@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi_cache import FastAPICache
 from fastapi_cache.backends.redis import RedisBackend
+from prometheus_fastapi_instrumentator import Instrumentator
 from redis import asyncio as aioredis
 from sqladmin import Admin
 from starlette.middleware.cors import CORSMiddleware
@@ -59,3 +60,10 @@ def startup():
         settings.REDIS_URI, encoding="utf8", decode_responses=True
     )
     FastAPICache.init(RedisBackend(redis), prefix="fastapi-cache")
+
+
+# Prometheus FastAPI Instrumentator
+instrumentator = Instrumentator(
+    should_group_status_codes=False, excluded_handlers=[".*admin.*", "/metrics"]
+)
+Instrumentator().instrument(app).expose(app)
