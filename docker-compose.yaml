@@ -49,6 +49,8 @@ services:
       - .env-prod
     depends_on:
       - redis
+    ports:
+      - 5555:5555
 
 volumes:
   postgresdata:
