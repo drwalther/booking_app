@@ -19,6 +19,7 @@
 * Аутентификация с помощью JWT-токена
 * Админ-панель на основе SQLAlchemy Admin
 * Очереди задач с помощью Celery/Flower
+* Метрики Prometeus + Grafana
 * Кеширование с помощью Redis
 * Асинхронные запросы в БД
 * CI (pre-commit, GitHub Actions)
