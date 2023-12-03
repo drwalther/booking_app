@@ -25,39 +25,39 @@ async def prepare_db():
     assert settings.MODE == "TEST"
 
     async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
-        yield
         await conn.run_sync(Base.metadata.drop_all)
+        await conn.run_sync(Base.metadata.create_all)
 
-        def open_mock(model: str):
-            """Reads mock data."""
-            with open(f"app/tests/mock_{model}.json", encoding="utf-8") as file:
-                return json.load(file)
+    def open_mock(model: str):
+        """Reads mock data."""
+        with open(f"app/tests/mock_{model}.json", encoding="utf-8") as file:
+            return json.load(file)
 
-        hotels = open_mock("hotels")
-        rooms = open_mock("rooms")
-        users = open_mock("users")
-        bookings = open_mock("bookings")
+    hotels = open_mock("hotels")
+    rooms = open_mock("rooms")
+    users = open_mock("users")
+    bookings = open_mock("bookings")
 
-        for booking in bookings:
-            booking["check_in_date"] = datetime.strptime(
-                booking["check_in_date"], "%Y-%m-%d"
-            )
-            booking["check_out_date"] = datetime.strptime(
-                booking["check_out_date"], "%Y-%m-%d"
-            )
+    # converts values to the date format
+    for booking in bookings:
+        booking["check_in_date"] = datetime.strptime(
+            booking["check_in_date"], "%Y-%m-%d"
+        )
+        booking["check_out_date"] = datetime.strptime(
+            booking["check_out_date"], "%Y-%m-%d"
+        )
 
-        async with session_maker() as session:
-            for Model, values in [
-                (Hotels, hotels),
-                (Rooms, rooms),
-                (Users, users),
-                (Bookings, bookings),
-            ]:
-                query = insert(Model).values(values)
-                await session.execute(query)
+    async with session_maker() as session:
+        for Model, values in [
+            (Hotels, hotels),
+            (Rooms, rooms),
+            (Users, users),
+            (Bookings, bookings),
+        ]:
+            query = insert(Model).values(values)
+            await session.execute(query)
 
-            await session.commit()
+        await session.commit()
 
 
 @pytest.fixture(scope="session")
