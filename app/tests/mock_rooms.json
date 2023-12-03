@@ -50,7 +50,7 @@
         "description": null,
         "price": 9815,
         "services": [],
-        "quantity": 10,
+        "rooms_quantity": 10,
         "image_id": 12
     },
     {
