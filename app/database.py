@@ -1,12 +1,10 @@
 from sqlalchemy import NullPool
 from sqlalchemy.ext.asyncio import (
     AsyncSession,
+    async_sessionmaker,
     create_async_engine,
 )
-from sqlalchemy.orm import (
-    DeclarativeBase,
-    sessionmaker,
-)
+from sqlalchemy.orm import DeclarativeBase
 
 from app.config import settings
 
@@ -19,7 +17,9 @@ else:
 
 engine = create_async_engine(DATABASE_URI, **DB_PARAMS)
 
-session_maker = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
+session_maker = async_sessionmaker(
+    bind=engine, class_=AsyncSession, expire_on_commit=False
+)
 
 
 class Base(DeclarativeBase):
