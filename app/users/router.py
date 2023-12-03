@@ -3,6 +3,7 @@ from fastapi import (
     Depends,
     Response,
 )
+from starlette import status
 
 from app.exception import (
     UserAlreadyExistsException,
@@ -22,7 +23,7 @@ from app.users.service import UsersService
 router = APIRouter(prefix="/auth", tags=["Auth and users"])
 
 
-@router.post("/register")
+@router.post("/register", status_code=status.HTTP_201_CREATED)
 async def register_user(user_data: SchemaUserAuth):
     existing_user = await UsersService.get_one(email=user_data.email)
     if existing_user:
