@@ -1,5 +1,4 @@
 import asyncio
-import json
 from datetime import datetime
 
 import pytest
@@ -16,6 +15,7 @@ from app.database import (
 from app.hotels.models import Hotels
 from app.main import app as fastapi_app
 from app.rooms.models import Rooms
+from app.tests.services.open_mock import open_mock
 from app.users.models import Users
 
 
@@ -28,10 +28,8 @@ async def prepare_db():
         await conn.run_sync(Base.metadata.drop_all)
         await conn.run_sync(Base.metadata.create_all)
 
-    def open_mock(model: str):
-        """Reads mock data."""
-        with open(f"app/tests/mock_{model}.json", encoding="utf-8") as file:
-            return json.load(file)
+    def add_mock_to_db(model: str):
+        """Adds mock data to tables in testing db."""
 
     hotels = open_mock("hotels")
     rooms = open_mock("rooms")
@@ -46,7 +44,7 @@ async def prepare_db():
         booking["check_out_date"] = datetime.strptime(
             booking["check_out_date"], "%Y-%m-%d"
         )
-
+    # add data to tables in the db
     async with session_maker() as session:
         for Model, values in [
             (Hotels, hotels),
