@@ -15,18 +15,20 @@
 ### Стэк
 * Микросервисная архитектура
 * FastAPI
-* SQLAlchemy/PostgreSQL
-* Аутентификация с помощью JWT-токена
+* SQLAlchemy / PostgreSQL / Alembic
 * Админ-панель на основе SQLAlchemy Admin
-* Очереди задач с помощью Celery/Flower
+* Аутентификация с помощью JWT-токена
+* Очереди задач с помощью Celery / Flower
 * Метрики Prometeus + Grafana
 * Кеширование с помощью Redis
 * Асинхронные запросы в БД
 * CI (pre-commit, GitHub Actions)
 * black, isort, ruff, docformatter
 * CORS для ограничения доступа к API
+* Юнит и интеграционные тесты
 ***
 
 ### TODO:
 * Реализовать механизм обновления JWT-токена
+* Добавить ролевую модель
 ***
