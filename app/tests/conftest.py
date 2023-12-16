@@ -28,7 +28,7 @@ async def prepare_db():
         await conn.run_sync(Base.metadata.drop_all)
         await conn.run_sync(Base.metadata.create_all)
 
-    def add_mock_to_db(model: str):
+    def add_mock_to_db():
         """Adds mock data to tables in testing db."""
 
     hotels = open_mock("hotels")
