@@ -13,7 +13,6 @@
 ***
 
 ### Стэк
-* Микросервисная архитектура
 * FastAPI
 * SQLAlchemy / PostgreSQL / Alembic
 * Админ-панель на основе SQLAlchemy Admin
